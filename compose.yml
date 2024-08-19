@@ -1,0 +1,38 @@
+services:
+  mariadb:
+    image: mariadb
+    container_name: pp-mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      - MARIADB_DATABASE=pp
+      - MARIADB_ROOT_PASSWORD=qwer1234
+    volumes:
+      - ./.compose/mariadb:/var/lib/mysql
+  mongo:
+    image: mongo
+    container_name: pp-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.compose/mongo:/data/db
+  redis:
+    image: redis
+    container_name: pp-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass qwer1234
+    volumes:
+      - ./.compose/redis/data:/data
+  rabbitmq:
+    image: rabbitmq
+    container_name: pp-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "61613:61613"
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=qwer1234
+    volumes:
+      - ./.compose/rabbitmq:/var/lib/rabbitmq
